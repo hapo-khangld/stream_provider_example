@@ -1,0 +1,18 @@
+final cartProvider = StateNotifierProvider<CartNotifier>((ref) => CartNotifier());
+
+final itemCountProvider = StreamProvider<int>((ref) {
+  return ref.watch(cartProvider).items.map((items) => items.length);
+});
+
+class CartPage extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, ScopedReader watch) {
+    final itemCount = watch(itemCountProvider);
+    return Scaffold(
+      appBar: AppBar(title: Text('Cart')),
+      body: Center(
+        child: Text('Number of items in cart: $itemCount'),
+      ),
+    );
+  }
+}
